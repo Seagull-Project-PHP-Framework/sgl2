@@ -81,7 +81,7 @@ class SGL2_Config
 
     public static function get($key, $default = false)
     {
-        list($dim1, $dim2) = split('\.', trim($key));
+        list($dim1, $dim2) = preg_split('/\./', trim($key));
         if (isset($dim1) && isset($dim2) && isset(self::$_aProps[$dim1][$dim2])) {
             $ret = self::$_aProps[$dim1][$dim2];
             if (empty($ret)) {

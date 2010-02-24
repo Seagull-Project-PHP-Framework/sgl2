@@ -179,12 +179,12 @@ class SGL2_Request
         $this->_aClean[$key] = $value;
     }
 
-    protected function __set($key, $value)
+    public function __set($key, $value)
     {
         $this->_aClean[$key] = $value;
     }
 
-    protected function __get($key)
+    public function __get($key)
     {
         if (isset($this->_aClean[$key])) {
             return $this->_aClean[$key];

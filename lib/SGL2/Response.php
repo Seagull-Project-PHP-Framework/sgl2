@@ -96,14 +96,14 @@ class SGL2_Response
      * @param unknown_type $k
      * @param unknown_type $v
      */
-    protected function __set($k, $v)
+    public function __set($k, $v)
     {
         if (!isset($this->$k)) {
             $this->_aProps[$k] = $v;
         }
     }
 
-    protected function __get($k)
+    public function __get($k)
     {
         if (isset($this->_aProps[$k])) {
             return $this->_aProps[$k];
@@ -137,7 +137,7 @@ class SGL2_Response
         $this->_code = $code;
     }
 
-    protected function __toString()
+    public function __toString()
     {
         return $this->_data;
     }
