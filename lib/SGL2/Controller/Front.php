@@ -48,13 +48,19 @@ class SGL2_Controller_Front extends SGL2_Controller_Abstract
         $router = $this->getRouter();
         $router->route($request);
 
+        SGL2_Registry::get('dispatcher')->triggerEvent(
+            new SGL2_Event($this, 'core.afterRouting', array(
+                'moduleName'     => $request->getModuleName(),
+                'controllerName' => $request->getControllerName(),
+        )));
+
         $aFilters = array(
             //  pre-process (order: top down)
-           'SGL2_Filter_LoadController',
-           'SGL2_Filter_CreateSession',
-           'SGL2_Filter_SetupLangSupport',
-           'SGL2_Filter_SetupLocale',
-           'SGL2_Filter_AuthenticateRequest',
+            //'SGL2_Filter_LoadController',
+            //'SGL2_Filter_CreateSession',
+            'SGL2_Filter_SetupLangSupport',
+            'SGL2_Filter_SetupLocale',
+            'SGL2_Filter_AuthenticateRequest',
 
             //  post-process (order: bottom up)
             'SGL2_Filter_BuildHeaders',

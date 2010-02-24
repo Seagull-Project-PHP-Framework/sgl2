@@ -32,98 +32,37 @@
 // +---------------------------------------------------------------------------+
 // | Seagull 2.0                                                               |
 // +---------------------------------------------------------------------------+
-// $Id: Abstract.php 4202 2008-10-24 12:06:36Z demian $
+// $Id: LoadController.php 4204 2008-10-24 12:31:42Z demian $
 
 
 /**
- * Abstract request processor.
+ * Instaniates a controller based on request params.
  *
- * @abstract
- * @package SGL
+ * The module is resolved from Request parameter
  *
- */
-abstract class SGL2_ProcessRequest
-{
-    abstract public function process(SGL2_Request $input, SGL2_Response $output);
-}
-
-/**
- * Decorator.
- *
- * @abstract
- * @package SGL
- */
-abstract class SGL2_DecorateProcess extends SGL2_ProcessRequest
-{
-    protected $_processRequest;
-
-    public function __construct(SGL2_ProcessRequest $pr)
-    {
-        $this->_processRequest = $pr;
-    }
-}
-
-/**
- * Core data processing routine.
- *
- * @package SGL
+ * @package Filter
  * @author  Demian Turner <demian@phpkitchen.com>
  */
-class SGL2_MainProcessBc extends SGL2_ProcessRequest
+class SGL2_Task_LoadController extends Uber_Plugin_Abstract
 {
-    public function process(SGL2_Request $input, SGL2_Response $output)
+    public function handleEvent(Uber_Event $e, $data = null)
     {
-        foreach ($input->getAll() as $k => $v) {
-            $output->set($k, $v);
+        $params = $e->getParameters();
+        $moduleName = $params['moduleName'];
+        $controllerName = $params['controllerName'];
+
+        $ctlr = SGL2_Inflector::getControllerClassName($controllerName);
+        $ctlrPath = SGL2_MOD_DIR . '/' . $moduleName . '/classes/';
+
+        //  build path to controller class
+        $classPath = $ctlrPath . $ctlr . '.php';
+        try {
+            SGL2_File::load($classPath);
+            SGL2_Registry::set('controller', new $ctlr());
+        } catch (Exception $e) {
+            throw new Exception("Controller '$ctlr' could not be found at $classPath");
         }
     }
 }
 
-abstract class SGL2_Controller_Abstract
-{
-    protected $_router;
-
-    public function getRouter()
-    {
-        if (is_null($this->_router)) {
-            $this->setRouter(new SGL2_Router());
-        }
-        return $this->_router;
-    }
-
-    public function setRouter($router)
-    {
-        $this->_router = $router;
-        return true;
-    }
-
-    abstract public function run();
-
-    public function init()
-    {
-        SGL2_Registry::set('request',    new SGL2_Request());
-        SGL2_Registry::set('response',   new SGL2_Response());
-        SGL2_Registry::set('dispatcher', Uber_Event_Dispatcher::getInstance());
-        $this->setupEnv();
-        $this->setupEventListeners();
-
-        define('SGL2_INITIALISED', true);
-    }
-
-    public function setupEnv()
-    {
-        $init = new SGL2_TaskRunner();
-        $init->addData(SGL2_Config::getAll());
-        $init->addTask(new SGL2_Task_SetupConstants());
-        $init->main();
-    }
-
-    public function setupEventListeners()
-    {
-        $disp = SGL2_Registry::get('dispatcher');
-        //  listeners should be loaded from config
-        $disp->addEventListener('core.afterRouting', new SGL2_Task_LoadController());
-        $disp->addEventListener('core.afterRouting', new SGL2_Task_CreateSession());
-    }
-}
 ?>

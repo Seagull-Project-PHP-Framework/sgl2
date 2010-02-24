@@ -32,98 +32,21 @@
 // +---------------------------------------------------------------------------+
 // | Seagull 2.0                                                               |
 // +---------------------------------------------------------------------------+
-// $Id: Abstract.php 4202 2008-10-24 12:06:36Z demian $
+// $Id: CreateSession.php 4202 2008-10-24 12:06:36Z demian $
 
 
 /**
- * Abstract request processor.
+ * Starts the session.
  *
- * @abstract
- * @package SGL
- *
- */
-abstract class SGL2_ProcessRequest
-{
-    abstract public function process(SGL2_Request $input, SGL2_Response $output);
-}
-
-/**
- * Decorator.
- *
- * @abstract
- * @package SGL
- */
-abstract class SGL2_DecorateProcess extends SGL2_ProcessRequest
-{
-    protected $_processRequest;
-
-    public function __construct(SGL2_ProcessRequest $pr)
-    {
-        $this->_processRequest = $pr;
-    }
-}
-
-/**
- * Core data processing routine.
- *
- * @package SGL
+ * @package Task
  * @author  Demian Turner <demian@phpkitchen.com>
  */
-class SGL2_MainProcessBc extends SGL2_ProcessRequest
+class SGL2_Task_CreateSession extends Uber_Plugin_Abstract
 {
-    public function process(SGL2_Request $input, SGL2_Response $output)
+    public function handleEvent(Uber_Event $e, $data = null)
     {
-        foreach ($input->getAll() as $k => $v) {
-            $output->set($k, $v);
-        }
+        SGL2_Registry::set('session', new SGL2_Session());
     }
 }
 
-abstract class SGL2_Controller_Abstract
-{
-    protected $_router;
-
-    public function getRouter()
-    {
-        if (is_null($this->_router)) {
-            $this->setRouter(new SGL2_Router());
-        }
-        return $this->_router;
-    }
-
-    public function setRouter($router)
-    {
-        $this->_router = $router;
-        return true;
-    }
-
-    abstract public function run();
-
-    public function init()
-    {
-        SGL2_Registry::set('request',    new SGL2_Request());
-        SGL2_Registry::set('response',   new SGL2_Response());
-        SGL2_Registry::set('dispatcher', Uber_Event_Dispatcher::getInstance());
-        $this->setupEnv();
-        $this->setupEventListeners();
-
-        define('SGL2_INITIALISED', true);
-    }
-
-    public function setupEnv()
-    {
-        $init = new SGL2_TaskRunner();
-        $init->addData(SGL2_Config::getAll());
-        $init->addTask(new SGL2_Task_SetupConstants());
-        $init->main();
-    }
-
-    public function setupEventListeners()
-    {
-        $disp = SGL2_Registry::get('dispatcher');
-        //  listeners should be loaded from config
-        $disp->addEventListener('core.afterRouting', new SGL2_Task_LoadController());
-        $disp->addEventListener('core.afterRouting', new SGL2_Task_CreateSession());
-    }
-}
 ?>
