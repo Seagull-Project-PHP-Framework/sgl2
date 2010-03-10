@@ -134,7 +134,7 @@ class SGL2_File
                     $path = $source . '/' . $file;
                     if (self::exists($path)) {
                         if (!self::exists($dest . '/' . $file) || $overwrite) {
-                            if (!@copy($path, $dest . '/' . $file)){
+                            if (!copy($path, $dest . '/' . $file)){
                                 throw new Exception('filesystem not writable',
                                     SGL2_ERROR_INVALIDFILEPERMS);
                             }

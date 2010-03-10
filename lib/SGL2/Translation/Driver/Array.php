@@ -183,7 +183,7 @@ class SGL2_Translation_Driver_Array extends SGL2_Translation_Driver
         if (!is_dir($langDir)) {
             require_once 'System.php';
             $ok = System::mkDir(array('-p', $langDir));
-            @chmod($langDir, 0777);
+            chmod($langDir, 0777);
         }
         if (!SGL2_File::exists($langFile)) {
             $ok = touch($langFile);

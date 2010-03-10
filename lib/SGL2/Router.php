@@ -260,7 +260,7 @@ class SGL2_Router
             } catch (Exception $e) {
                 throw new Exception('error copying routes file, is sgl/var writable?');
             }
-            @chmod($routesFile, 0666);
+            chmod($routesFile, 0666);
         }
         // no custom routes by default or in case $aRoutes var is not set
         $aRoutes = array();

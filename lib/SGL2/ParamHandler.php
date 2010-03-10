@@ -107,7 +107,7 @@ class SGL2_ParamHandler_Ini extends SGL2_ParamHandler
 {
     public function read()
     {
-        $ret = @parse_ini_file($this->_source, true);
+        $ret = parse_ini_file($this->_source, true);
         return (count($ret)) ? $ret : false;
     }
 

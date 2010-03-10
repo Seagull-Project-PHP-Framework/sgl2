@@ -236,7 +236,7 @@ class SGL2_Config
         if (!is_dir($varConfigDir)) {
             require_once 'System.php';
             $ok = System::mkDir(array('-p', $varConfigDir));
-            @chmod($varConfigDir, 0777);
+            chmod($varConfigDir, 0777);
         }
     }
 

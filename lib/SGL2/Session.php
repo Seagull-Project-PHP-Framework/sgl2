@@ -165,8 +165,8 @@ class SGL2_Session
     {
         //  set secure session key
         $startTime = time();
-        $acceptLang = @$_SERVER['HTTP_ACCEPT_LANGUAGE'];
-        $userAgent = @$_SERVER['HTTP_USER_AGENT'];
+        $acceptLang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+        $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
         //  user object is passed only during login
         if (is_object($oUser)) {
@@ -198,7 +198,7 @@ class SGL2_Session
             $aSessVars['aPerms'] = $aPerms;
 
             //  check for rememberMe cookie
-            list(, $cookieValue) = @unserialize($_COOKIE['SGL2_REMEMBER_ME']);
+            list(, $cookieValue) = unserialize($_COOKIE['SGL2_REMEMBER_ME']);
             //  if 'remember me' cookie is set remove it
             if (!empty($cookieValue)) {
                 $da->deleteUserLoginCookieByUserId($oUser->usr_id, $cookieValue);
@@ -279,8 +279,8 @@ class SGL2_Session
      */
     public static function isValid()
     {
-        $acceptLang = @$_SERVER['HTTP_ACCEPT_LANGUAGE'];
-        $userAgent = @$_SERVER['HTTP_USER_AGENT'];
+        $acceptLang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+        $userAgent = $_SERVER['HTTP_USER_AGENT'];
         $currentKey = md5($_SESSION['username'] . $_SESSION['startTime'] .
             $acceptLang . $userAgent);
 

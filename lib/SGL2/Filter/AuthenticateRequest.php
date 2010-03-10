@@ -60,7 +60,7 @@ class SGL2_Filter_AuthenticateRequest extends SGL2_DecorateProcess
             return false;
         }
         $cookie = $_COOKIE['SGL2_REMEMBER_ME'];
-        list($username, $cookieValue) = @unserialize($cookie);
+        list($username, $cookieValue) = unserialize($cookie);
         //  wrong cookie value was saved
         if (!$username || !$cookieValue) {
             return false;

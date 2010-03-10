@@ -97,3 +97,5 @@ class SGL2_ErrorHandler
         $GLOBALS['_SGL']['ERROR_OVERRIDE'] = ($mode) ? false : true;
     }
 }
+
+?>
