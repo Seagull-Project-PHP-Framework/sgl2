@@ -1,4 +1,13 @@
 <?php
+
+//	BC for < PHP 5.3.x
+if (!class_exists('SplQueue')) {
+	require dirname(__DIR__) .'/bc/splqueue/spldoublylinkedlist.php';
+	require dirname(__DIR__) .'/bc/splqueue/splqueue.php';	
+}
+
+
+
 class Uber_Event_Dispatcher
 {
     protected $_listeners = array();
@@ -9,7 +18,7 @@ class Uber_Event_Dispatcher
     private function __construct()
     {
         $this->_queue = new SplQueue();
-        $this->_queue->setIteratorMode(SplQueue::IT_MODE_DELETE);
+        //$this->_queue->setIteratorMode(SplQueue::IT_MODE_DELETE);
         $this->_globalListeners = new Uber_Event_Listener_Collection();
     }
 
