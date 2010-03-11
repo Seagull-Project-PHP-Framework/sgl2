@@ -97,9 +97,9 @@ class SGL2_Controller_App
 	
     public function loadCommand(SGL2_Context $appCtx, $moduleName, $controllerName, $cmdName)
     {
-        $file = "/modules/$moduleName/Command/" .ucfirst($cmdName).'.php';
+        $file = '/modules/'.ucfirst($moduleName)."/Command/".ucfirst($cmdName).'.php';
         require PROJECT_PATH . $file;
-        $class = ucfirst($moduleName) .'_Command_'. ucfirst($cmdName);
+        $class = ucfirst($moduleName) .'_Command_'.ucfirst($cmdName);
         $obj = new $class($appCtx);
         return $obj;
     }
