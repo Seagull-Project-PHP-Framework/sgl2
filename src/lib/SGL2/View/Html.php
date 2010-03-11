@@ -15,19 +15,13 @@ class SGL2_View_Html extends SGL2_View_Abstract
      */
     public function __construct($response, $templateEngine = null)
     {
-		$ctx = SGL2_Context::getInstance();
+		$ctx = SGL2_Context_App::getInstance();
         //  prepare renderer class
         if (is_null($templateEngine)) {
             $templateEngine = $ctx->getConfig()->site->templateEngine;
         }
         $templateEngine =  ucfirst($templateEngine);
-        $rendererClass  = 'SGL2_Renderer_Html_' . $templateEngine . 'Strategy';
-
-        //  get all html onLoad events and js files
-//        $response->onLoad = $response->getOnLoadEvents();
-//        $response->onUnload = $response->getOnUnloadEvents();
-//        $response->onReadyDom = $response->getOnReadyDomEvents();
-//        $response->javascriptSrc = $response->getJavascriptFiles();
+        $rendererClass  = 'SGL2_View_Renderer_Html_' . $templateEngine;
 
         parent::__construct($response, new $rendererClass);
     }

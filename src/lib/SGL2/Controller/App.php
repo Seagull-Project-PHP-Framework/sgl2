@@ -42,8 +42,8 @@ class SGL2_Controller_App
 		$response->layout = $config->modules->default->layout;
 		$response->template = $config->modules->default->template;
 		$response->theme = $config->site->defaultTheme;
-        $view = new SGL2_View_Text($response);		
-//        $view = new SGL2_View_Html($response);		
+//        $view = new SGL2_View_Text($response);		
+        $view = new SGL2_View_Html($response);		
 		return $view;
 	}
 
