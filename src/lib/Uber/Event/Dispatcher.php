@@ -2,8 +2,8 @@
 
 //	BC for < PHP 5.3.x
 if (!class_exists('SplQueue')) {
-	require dirname(__DIR__) .'/bc/splqueue/spldoublylinkedlist.php';
-	require dirname(__DIR__) .'/bc/splqueue/splqueue.php';	
+	require dirname(dirname(__FILE__)) .'/bc/splqueue/spldoublylinkedlist.php';
+	require dirname(dirname(__FILE__)) .'/bc/splqueue/splqueue.php';	
 }
 
 
