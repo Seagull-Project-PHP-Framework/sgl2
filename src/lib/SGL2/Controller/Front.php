@@ -29,7 +29,7 @@ class SGL2_Controller_Front
 	public function processRequest(SGL2_Context $appCtx, SGL2_Request $request,
 		SGL2_Response $response)
 	{
-		$appController = new SGL2_Controller_App($appCtx);
+		$appController = new SGL2_Controller_Application($appCtx);
 		$appController->handleRequest($request, $response);
 		$ret = $appController->handleResponse($appCtx, $request, $response);
 		return $ret;

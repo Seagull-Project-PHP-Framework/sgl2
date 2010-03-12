@@ -1,6 +1,6 @@
 <?php
 
-class SGL2_Controller_App
+class SGL2_Controller_Application
 {
 	protected
 	  $ctx	     	= null,
