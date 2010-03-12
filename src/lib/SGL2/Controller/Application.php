@@ -15,8 +15,8 @@ class SGL2_Controller_Application
 	public function handleRequest(SGL2_Request $request, SGL2_Response $response)
 	{
 		try {
-			$controller = $this->resolveController($this->ctx, $request);
-			$cmd = $controller->resolveCommand($this->ctx, $request); // while
+			$controller = $this->resolveController($request);
+			$cmd = $controller->resolveCommand($request); // while
 			if ($cmd->validate($request)) {
 				$cmd->execute($request, $response);			
 			} else {
@@ -27,18 +27,18 @@ class SGL2_Controller_Application
 		}
 	}
 	
-	public function handleResponse(SGL2_Context $appCtx, SGL2_Request $request, SGL2_Response $response)
+	public function handleResponse(SGL2_Request $request, SGL2_Response $response)
 	{
-		$view = $this->getView($appCtx, $request, $response);
+		$view = $this->getView($request, $response);
 //		$template = $view->getTemplate($requestCtx, $responseCtx);
 		$ret = $this->invokeView($view);
 		return $ret;
 //		$this->dispatch($appCtx, $requestCtx, $responseCtx);
 	}	
 	
-	public function getView(SGL2_Context $appCtx, SGL2_Request $request, SGL2_Response $response)
+	public function getView(SGL2_Request $request, SGL2_Response $response)
 	{
-		$config = $appCtx->getConfig();
+		$config = $this->ctx->getConfig();
 		$response->layout = $config->modules->default->layout;
 		$response->template = $config->modules->default->template;
 		$response->theme = $config->site->defaultTheme;
@@ -52,25 +52,25 @@ class SGL2_Controller_Application
 		return $view->render();
 	}		
 	
-	public function dispatch(SGL2_Context $appCtx, SGL2_Request $request, SGL2_Response $response)
-	{
-		try {
-			$dispatcher = $appCtx->getRequestDispatcher($template);
-			$dispatcher->forward($request, $response);
-		} catch (Exception $e) {
-			throw $e;
-		}
-	}	
+	// public function dispatch(SGL2_Context $appCtx, SGL2_Request $request, SGL2_Response $response)
+	// {
+	// 	try {
+	// 		$dispatcher = $appCtx->getRequestDispatcher($template);
+	// 		$dispatcher->forward($request, $response);
+	// 	} catch (Exception $e) {
+	// 		throw $e;
+	// 	}
+	// }	
 	
-	public function resolveController(SGL2_Context $appCtx, SGL2_Request $request)
+	public function resolveController(SGL2_Request $request)
 	{
         $moduleName = $request->getModuleName();
         $controllerName = $request->getControllerName();
-        $controller = $this->loadController($appCtx, $moduleName, $controllerName);		
+        $controller = $this->loadController($moduleName, $controllerName);		
 		return $controller;
 	}		
 	
-	public function loadController(SGL2_Context $appCtx, $moduleName, $controllerName)
+	public function loadController($moduleName, $controllerName)
 	{
 		if (is_null($controllerName)) {
 			//	we only loading Commands, use this Controller
@@ -80,27 +80,27 @@ class SGL2_Controller_Application
 	        $file = "/modules/".ucfirst($moduleName)."/" .ucfirst($controllerName).'.php';
 	        require PROJECT_PATH . $file;
 	        $class = ucfirst($moduleName) .'_Controller_'. ucfirst($controllerName);
-	        $ret = new $class($appCtx);
+	        $ret = new $class($this->ctx);
 		}
         return $ret;				
 	}				
 	
 	//	commands should not know about views	
-	public function resolveCommand(SGL2_Context $appCtx, SGL2_Request $request)
+	public function resolveCommand(SGL2_Request $request)
 	{
         $moduleName = $request->getModuleName();
         $controllerName = $request->getControllerName();
         $cmdName = $request->getCmdName();
-        $oCmd = $this->loadCommand($appCtx, $moduleName, $controllerName, $cmdName);
+        $oCmd = $this->loadCommand($moduleName, $controllerName, $cmdName);
         return $oCmd;		
 	}
 	
-    public function loadCommand(SGL2_Context $appCtx, $moduleName, $controllerName, $cmdName)
+    public function loadCommand($moduleName, $controllerName, $cmdName)
     {
         $file = '/modules/'.ucfirst($moduleName)."/Command/".ucfirst($cmdName).'.php';
         require PROJECT_PATH . $file;
         $class = ucfirst($moduleName) .'_Command_'.ucfirst($cmdName);
-        $obj = new $class($appCtx);
+        $obj = new $class($this->ctx);
         return $obj;
     }
 }

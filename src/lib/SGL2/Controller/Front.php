@@ -31,7 +31,7 @@ class SGL2_Controller_Front
 	{
 		$appController = new SGL2_Controller_Application($appCtx);
 		$appController->handleRequest($request, $response);
-		$ret = $appController->handleResponse($appCtx, $request, $response);
+		$ret = $appController->handleResponse($request, $response);
 		return $ret;
 	}
 }
