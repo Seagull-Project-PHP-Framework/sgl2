@@ -39,16 +39,16 @@ class VariousTest extends PHPUnit_Framework_TestCase
     public function testAppContext()
     {
 		$config = new Zend_Config_Ini(SGL2_PATH.'/tests/config.ini', 'staging');
-        $ctx = SGL2_Context_App::createInstance($config);
-		$ctx2 = SGL2_Context_App::getInstance();
+        $registry = SGL2_Registry::createInstance($config);
+		$registry2 = SGL2_Registry::getInstance();
 		$this->assertThat(
-			$ctx,
-			$this->identicalTo($ctx2)
+			$registry,
+			$this->identicalTo($registry2)
 		);
-		$this->assertTrue(SGL2_Context_App::hasInstance());
+		$this->assertTrue(SGL2_Registry::hasInstance());
 		$ctx->set('foo', new Foo());
-		$this->assertSame($ctx->get('foo'), $ctx2->get('foo'));
-		$this->assertTrue(is_a($ctx->get('foo'), 'Foo'));		
+		$this->assertSame($registry->get('foo'), $registry2->get('foo'));
+		$this->assertTrue(is_a($registry->get('foo'), 'Foo'));		
     }
 
    

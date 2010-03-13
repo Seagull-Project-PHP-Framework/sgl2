@@ -3,13 +3,13 @@
 class SGL2_Controller_Application
 {
 	protected
-	  $ctx	     	= null,
+	  $registry	  	= null,
 	  $dispatcher   = null;	
 	
-	public function __construct(SGL2_Context $ctx)
+	public function __construct(SGL2_Registry $registry)
 	{
-		$this->ctx = $ctx;
-		$this->dispatcher = $ctx->getEventDispatcher();
+		$this->registry = $registry;
+		$this->dispatcher = $registry->getEventDispatcher();
 	}	
 	
 	public function handleRequest(SGL2_Request $request, SGL2_Response $response)
@@ -38,7 +38,7 @@ class SGL2_Controller_Application
 	
 	public function getView(SGL2_Request $request, SGL2_Response $response)
 	{
-		$config = $this->ctx->getConfig();
+		$config = $this->registry->getConfig();
 		$response->layout = $config->modules->default->layout;
 		$response->template = $config->modules->default->template;
 		$response->theme = $config->site->defaultTheme;
@@ -80,7 +80,7 @@ class SGL2_Controller_Application
 	        $file = "/modules/".ucfirst($moduleName)."/" .ucfirst($controllerName).'.php';
 	        require PROJECT_PATH . $file;
 	        $class = ucfirst($moduleName) .'_Controller_'. ucfirst($controllerName);
-	        $ret = new $class($this->ctx);
+	        $ret = new $class($this->registry);
 		}
         return $ret;				
 	}				
@@ -100,7 +100,7 @@ class SGL2_Controller_Application
         $file = '/modules/'.ucfirst($moduleName)."/Command/".ucfirst($cmdName).'.php';
         require PROJECT_PATH . $file;
         $class = ucfirst($moduleName) .'_Command_'.ucfirst($cmdName);
-        $obj = new $class($this->ctx);
+        $obj = new $class($this->registry);
         return $obj;
     }
 }

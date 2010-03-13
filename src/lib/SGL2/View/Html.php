@@ -15,10 +15,10 @@ class SGL2_View_Html extends SGL2_View_Abstract
      */
     public function __construct($response, $templateEngine = null)
     {
-		$ctx = SGL2_Context_App::getInstance();
+		$registry = SGL2_Registry::getInstance();
         //  prepare renderer class
         if (is_null($templateEngine)) {
-            $templateEngine = $ctx->getConfig()->site->templateEngine;
+            $templateEngine = $registry->getConfig()->site->templateEngine;
         }
         $templateEngine =  ucfirst($templateEngine);
         $rendererClass  = 'SGL2_View_Renderer_Html_' . $templateEngine;

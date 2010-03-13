@@ -1,7 +1,7 @@
 <?php
 
 
-class SGL2_Context_App extends SGL2_Context
+class SGL2_Registry extends SGL2_Context
 {
     protected
             $dispatcher          = null,

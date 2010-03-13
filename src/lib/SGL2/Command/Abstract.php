@@ -2,7 +2,7 @@
 
 abstract class SGL2_Command_Abstract
 {
-	abstract public function __construct(SGL2_Context $ctx);
+	abstract public function __construct(SGL2_Registry $registry);
 		
 	abstract public function validate(SGL2_Request $request);
 	

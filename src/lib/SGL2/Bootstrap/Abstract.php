@@ -1,7 +1,9 @@
 <?php
 
 abstract class SGL2_Bootstrap_Abstract
-{				
+{		
+	protected $registry;
+			
 	abstract public function initConfig();
 	
 	abstract public function initCache();

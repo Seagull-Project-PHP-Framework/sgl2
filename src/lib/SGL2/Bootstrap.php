@@ -5,8 +5,8 @@ class SGL2_Bootstrap extends SGL2_Bootstrap_Abstract
 	public function __construct()
 	{
 		$config = new Zend_Config_Ini(PROJECT_PATH.'/var/config.ini', 'staging');
-		$ctx = SGL2_Context_App::createInstance($config);	
-		$this->ctx = $ctx;	
+		$registry = SGL2_Registry::createInstance($config);	
+		$this->registry = $registry;	
 	}				
 
 	public function initEnv()
@@ -18,9 +18,9 @@ class SGL2_Bootstrap extends SGL2_Bootstrap_Abstract
 	
 	public function initRouter()
 	{
-		$this->ctx->set('request', new SGL2_Request());
-		$this->ctx->set('response', new SGL2_Response());
-		$this->ctx->set('router', new SGL2_Router());
+		$this->registry->set('request', 	new SGL2_Request());
+		$this->registry->set('response', 	new SGL2_Response());
+		$this->registry->set('router', 		new SGL2_Router());
 	}
 	
 	public function initView()
