@@ -6,7 +6,7 @@ define('SGL2_PATH', dirname(__DIR__));
  * Test suite.
  *
  * @package SGL
- * @author  Demian Turner <demian@phpkitchen.net>
+ * @author  Demian Turner <demian@phpkitchen.com>
  */
 class VariousTest extends PHPUnit_Framework_TestCase
 {
@@ -40,13 +40,14 @@ class VariousTest extends PHPUnit_Framework_TestCase
     {
 		$config = new Zend_Config_Ini(SGL2_PATH.'/tests/config.ini', 'staging');
         $registry = SGL2_Registry::createInstance($config);
+
 		$registry2 = SGL2_Registry::getInstance();
 		$this->assertThat(
 			$registry,
 			$this->identicalTo($registry2)
 		);
 		$this->assertTrue(SGL2_Registry::hasInstance());
-		$ctx->set('foo', new Foo());
+		$registry->set('foo', new Foo());
 		$this->assertSame($registry->get('foo'), $registry2->get('foo'));
 		$this->assertTrue(is_a($registry->get('foo'), 'Foo'));		
     }

@@ -1,5 +1,7 @@
 <?php
 
+//$ php autoload.php ../src ../tests/out_bootstrap.php
+
 if ($argc != 3) die('Usage: ' . $argv[0] . ' <directory> <outfile>' . PHP_EOL . PHP_EOL);
 
 $path = $argv[1];

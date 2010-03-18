@@ -14,11 +14,14 @@ class SGL2_Controller_Front
 
     public function dispatch()
     {
-		$registry = SGL2_Registry::getInstance();
-		$request = $registry->getRequest();
-		$response = $registry->getResponse();
+		$registry 	= SGL2_Registry::getInstance();
+		$request 	= $registry->getRequest();
+		$response 	= $registry->getResponse();
+		$router 	= $registry->getRouter();
+
 		$ret = false;
 		try {
+			$aRet = $router->route($request->getUri());
 			$ret = $this->processRequest($registry, $request, $response);
 		} catch (Exception $e) {
 			throw $e;
@@ -33,6 +36,6 @@ class SGL2_Controller_Front
 		$appController->handleRequest($request, $response);
 		$ret = $appController->handleResponse($request, $response);
 		return $ret;
-	}
+	}		
 }
 ?>

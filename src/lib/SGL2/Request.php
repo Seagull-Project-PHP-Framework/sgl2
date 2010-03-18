@@ -66,5 +66,23 @@ class SGL2_Request
         }
         return $ret;
     }
+
+	public function inCLI()
+	{
+		return 0 == strncasecmp(PHP_SAPI, 'cli', 3);
+	}
+	
+	public function getUri()
+	{
+		if (!$this->inCLI()) {
+			$ret = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+			$ret = (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'Off')
+				? 'http://' . $ret
+				: 'https://' . $ret;			
+		} else {
+			$ret = false;
+		}
+		return $ret;
+	}
 }
 ?>

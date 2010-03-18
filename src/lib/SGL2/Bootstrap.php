@@ -20,7 +20,9 @@ class SGL2_Bootstrap extends SGL2_Bootstrap_Abstract
 	{
 		$this->registry->set('request', 	new SGL2_Request());
 		$this->registry->set('response', 	new SGL2_Response());
-		$this->registry->set('router', 		new SGL2_Router());
+		$config = $this->registry->getConfig();
+		$this->registry->set('router', 		new SGL2_Router($config->routing->adapter, 
+			$config->routing->toArray()));
 	}
 	
 	public function initView()
