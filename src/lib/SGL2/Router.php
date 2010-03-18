@@ -37,7 +37,7 @@
  *	),
  * );
  *
- * If it's neccessary to resolve parameters from subdomain,
+ * If it's necessary to resolve parameters from subdomain,
  * you can specify a subdomain entry per route:
  *
  * array(
