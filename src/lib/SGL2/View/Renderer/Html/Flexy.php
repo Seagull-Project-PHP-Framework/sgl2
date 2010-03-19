@@ -77,7 +77,6 @@ class SGL2_View_Renderer_Html_Flexy extends SGL2_View_Renderer_Abstract
         );
 
 #$ok = $this->_setupPlugins($response, $options);
-		require_once 'HTML/Template/Flexy.php';
         $flexy = new HTML_Template_Flexy($options);
         return $flexy;
     }
