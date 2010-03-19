@@ -12,11 +12,11 @@ class SGL2_Router_Adapter_Horde extends SGL2_Router_Adapter
     
     public function route($url, $noRedirect = false)
     {
-	// use http://www.php.net/manual/en/function.parse-url.php	
+// use http://www.php.net/manual/en/function.parse-url.php	
 		if ($url === false) {
 			return false;
 		}
-    	if (strpos($url, '://') === FALSE) {
+    	if (strpos($url, '://') === false) {
     		// The router requires to get the absolute urls for routing
     		throw new SGL2_Router_Exception('Tried to route a url which seems not to be a absolute url with protocol');	
     	}
@@ -52,7 +52,8 @@ class SGL2_Router_Adapter_Horde extends SGL2_Router_Adapter
     			? $aController[1]
     			: null;
 
-    		if (empty($aHordeMatch[0]['controller']) && in_array($aHordeMatch[0]['module'], $this->_controllers[$aHordeMatch[0]['module']])) {
+    		if (empty($aHordeMatch[0]['controller']) && in_array($aHordeMatch[0]['module'], 
+					$this->_controllers[$aHordeMatch[0]['module']])) {
     			// If there is a controller with the same name as the module, take it
     			$aHordeMatch[0]['controller'] = $aHordeMatch[0]['module'];
     		}
@@ -70,14 +71,14 @@ class SGL2_Router_Adapter_Horde extends SGL2_Router_Adapter
 			if ($noRedirect && $protocol != $aHordeMatch[1]->protocol) {
 				// If no redirect and protocol doesn't match, route is invalid
 				return false;
-			} else if (!$noRedirect) {	
+			} elseif (!$noRedirect) {	
     			// If redirect is enabled, we generate a url based
     			// on the matched route to redirect on demand		
 				$verifyUrl = $this->generate($aHordeMatch[1]->sglRouteName, $aHordeMatch[0]);
 					
 	    		if ($orgUrl != $verifyUrl) {
     				// Redirect with "301 moved permanently"
-    				header("Location: " . $verifyUrl, TRUE, 301);
+    				header("Location: " . $verifyUrl, true, 301);
     				exit();
 	    		}
 	    	}
@@ -96,10 +97,11 @@ class SGL2_Router_Adapter_Horde extends SGL2_Router_Adapter
     	}
 
         if (empty($routeName) && empty($params['module'])) {
-			throw new SGL2_Router_Exception('Tried to get a route without specifing route name or module/controller');	
+			throw new SGL2_Router_Exception('Tried to get a route without specifying route name or module/controller');	
         }
 
-    	if (!empty($this->_transOptions['localePropagation']) && in_array($this->_transOptions['localePropagation'], array('prefix', 'subDomain')) && empty($params['locale'])) {
+    	if (!empty($this->_transOptions['localePropagation']) && in_array($this->_transOptions['localePropagation'], 
+				array('prefix', 'subDomain')) && empty($params['locale'])) {
     		$params['locale'] = $this->_transOptions['defaultLocale'];
     	}
 
@@ -128,12 +130,12 @@ class SGL2_Router_Adapter_Horde extends SGL2_Router_Adapter
 		$hasParams = false;
 		$protocol = $this->_options['protocol'];
 		if (!empty($routeName) && !empty($this->_aMapper->routeNames[$routeName])) {
-			$protocol = $this->_aMapper->routeNames[$routeName]->sglProtocol;
+			$protocol  = $this->_aMapper->routeNames[$routeName]->sglProtocol;
 			$hasParams = $this->_aMapper->routeNames[$routeName]->sglParams;
 		}
         
         if (!empty($url)) {
-        	if (strpos($url, '?') !== FALSE && !$hasParams) {
+        	if (strpos($url, '?') !== false && !$hasParams) {
         		$aUrl = explode('?', str_replace('&amp;', '&', $url));
 				parse_str($aUrl[1], $params);
 
@@ -158,10 +160,11 @@ class SGL2_Router_Adapter_Horde extends SGL2_Router_Adapter
             'explicit' => true, // Do not connect to Horde default routes
         ));
 
-		if (!empty($this->_transOptions['localePropagation']) && in_array($this->_transOptions['localePropagation'], array('prefix', 'subDomain'))) {
+		if (!empty($this->_transOptions['localePropagation']) && in_array($this->_transOptions['localePropagation'], 
+				array('prefix', 'subDomain'))) {
 			if ($this->_transOptions['localePropagation'] == 'subDomain') {
 				$this->_options['domainPrefix'] .= ':(locale).';			
-			} else if ($this->_transOptions['localePropagation'] == 'prefix') {
+			} elseif ($this->_transOptions['localePropagation'] == 'prefix') {
 				$this->_options['routePrefix'] .= ':locale/';			
 			}
 			
@@ -219,7 +222,8 @@ class SGL2_Router_Adapter_Horde extends SGL2_Router_Adapter
 	        );	
 
 			$this->_mapper->routeNames[$routeName]->sglParams    = $hasParams;
-	        $this->_mapper->routeNames[$routeName]->sglProtocol  = !empty($aRoute['protocol']) ? $aRoute['protocol'] : $this->_options['protocol'];
+	        $this->_mapper->routeNames[$routeName]->sglProtocol  = !empty($aRoute['protocol']) 
+				? $aRoute['protocol'] : $this->_options['protocol'];
 	        $this->_mapper->routeNames[$routeName]->sglRouteName = $routeName;
 		}
 

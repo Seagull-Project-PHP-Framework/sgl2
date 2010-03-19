@@ -22,11 +22,12 @@ abstract class SGL2_Router_Adapter
         );
         
         $this->_options = array_merge($this->_options, $options);
-        $this->_options['defaults'] = array_merge(!empty($options['defaults']) ? $options['defaults'] : array(), array('module' => 'default', 'action' => 'index'));
+        $this->_options['defaults'] = array_merge(!empty($options['defaults']) ? $options['defaults'] : array(), 
+			array('module' => 'default', 'action' => 'index'));
         $this->_options['requirements'] = !empty($options['requirements']) ? $options['requirements'] : array();
         
         if (empty($this->_options['domain'])) {
-        	throw new SGL2_Router_Exception('Tried to create a router adapter without specifing a domain');	
+        	throw new SGL2_Router_Exception('Tried to create a router adapter without specifying a domain');	
         }
         
         if (!empty($this->_options['domainPrefix']) && substr($this->_options['domainPrefix'], -1) != '.') {
@@ -41,7 +42,7 @@ abstract class SGL2_Router_Adapter
     public function setModuleControllers(array $controllers)
     {
         if (empty($controllers)) {
-        	throw new SGL2_Router_Exception('Tried to create a router adapter without specifing valid modules/controllers');	
+        	throw new SGL2_Router_Exception('Tried to create a router adapter without specifying valid modules/controllers');	
         }
         
         $this->_controllers = $controllers;
@@ -64,7 +65,8 @@ abstract class SGL2_Router_Adapter
         
         if (!empty($transOptions['localePropagation'])) {
 			if (empty($transOptions['installedLocales']) || empty($transOptions['defaultLocale'])) {
-				throw new SGL2_Router_Exception('Tried to create a router adapter with translation without specifing installed locales and/or default locale');	
+				throw new SGL2_Router_Exception('Tried to create a router adapter with translation '.
+					'without specifying installed locales and/or default locale');	
 			}   
 		}     
         
@@ -93,8 +95,11 @@ abstract class SGL2_Router_Adapter
     	// When language should be part of the url, the router expects the
     	// url to have the language always present. Even though it's not there,
     	// we add default language and remove it later again    	    	    	    	
-    	if (!empty($this->_transOptions['localePropagation']) && in_array($this->_transOptions['localePropagation'], array('prefix', 'subDomain'))) {
-    		$localeClass = !empty($this->_transOptions['localeClass']) ? new $this->_transOptions['localeClass']() : 'SGL2_Locale';
+    	if (!empty($this->_transOptions['localePropagation']) && in_array($this->_transOptions['localePropagation'], 
+				array('prefix', 'subDomain'))) {
+    		$localeClass = !empty($this->_transOptions['localeClass']) 
+				? new $this->_transOptions['localeClass']() 
+				: 'SGL2_Locale';
     		$installedLocales = explode(',', $this->_transOptions['installedLocales']);          	
         	
         	if ($this->_transOptions['localePropagation'] == 'subDomain') {
@@ -174,7 +179,8 @@ abstract class SGL2_Router_Adapter
     
     protected function _generatePostProcess($url, $locale)
     {
-        if (!empty($this->_transOptions['localePropagation']) && empty($this->_transOptions['localePropagateDefault']) && $locale == $this->_transOptions['defaultLocale']) {
+        if (!empty($this->_transOptions['localePropagation']) && empty($this->_transOptions['localePropagateDefault']) 
+				&& $locale == $this->_transOptions['defaultLocale']) {
         	// The router always adds language to url, even though the default
         	// language should be hidden. So post process this here and remove
         	// default language again

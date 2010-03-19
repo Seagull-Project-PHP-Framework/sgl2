@@ -55,7 +55,7 @@ class SGL2_Locale
 			$this->_locale = $this->_detectLocale();
 		} else if ($this->_isValidLocale((string) $locale)) {
 			$this->_locale = (string) $locale;
-		} else if (strpos((string) $locale, '_') !== FALSE) {
+		} else if (strpos((string) $locale, '_') !== false) {
 			$language = explode('_', (string) $locale);
 			$this->setLocale($language[0]);
 		}
