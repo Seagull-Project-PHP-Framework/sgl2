@@ -22,6 +22,6 @@ class SGL2_Router_Exception extends Exception
 			parent::__construct($message);
 		}
 	}	
-};
+}
 
 ?>

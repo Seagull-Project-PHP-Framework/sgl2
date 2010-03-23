@@ -233,6 +233,6 @@ abstract class SGL2_Router_Adapter
 		
 		return $aReturn;
 	}
-};
+}
 
 ?>

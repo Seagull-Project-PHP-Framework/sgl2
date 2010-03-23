@@ -14,6 +14,7 @@ class SGL2_Controller_Application
 	
 	public function handleRequest(SGL2_Request $request, SGL2_Response $response)
 	{
+		$this->registry->getEventDispatcher()->triggerEvent(new SGL2_Event($this, 'core.beforeDispatch'));					
 		try {
 			$controller = $this->resolveController($request);
 			$cmd = $controller->resolveCommand($request); // while
@@ -25,6 +26,7 @@ class SGL2_Controller_Application
 		} catch (Exception $e) {
 			throw $e;
 		}
+		$this->registry->getEventDispatcher()->triggerEvent(new SGL2_Event($this, 'core.afterDispatch'));							
 	}
 	
 	public function handleResponse(SGL2_Request $request, SGL2_Response $response)

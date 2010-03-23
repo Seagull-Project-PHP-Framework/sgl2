@@ -16,6 +16,11 @@ Or commandline
 ## Requirements
 Currently the code is working fine in >= PHP 5.2.6.
 
+## Documentation
+It's a work in progress
+
+* http://trac.seagullproject.org/wiki/2_0/Overview
+
 ## Unit tests
 All unit tests done with PHPunit, see here for instructions on setup and use:
 
