@@ -1,7 +1,5 @@
 <?php
 
-define('SGL2_PATH', dirname(__DIR__));
-
 /**
  * Test suite.
  *
@@ -10,6 +8,7 @@ define('SGL2_PATH', dirname(__DIR__));
  */
 class VariousTest extends PHPUnit_Framework_TestCase
 {
+    
 	function setup()
 	{
 
@@ -38,7 +37,7 @@ class VariousTest extends PHPUnit_Framework_TestCase
 
     public function testAppContext()
     {
-		$config = new Zend_Config_Ini(SGL2_PATH.'/tests/config.ini', 'staging');
+		$config = new Zend_Config_Ini('config.ini', 'staging');
         $registry = SGL2_Registry::createInstance($config);
 
 		$registry2 = SGL2_Registry::getInstance();

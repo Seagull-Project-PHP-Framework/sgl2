@@ -1,3 +1,3 @@
-The test suite needs an autoloader bootstrap file, use these scripts to generate it:
+to run the tests, cd to this dir and run `phpunit` 
 
-$ php scripts/autoload.php src/lib tests/out_bootstrap.php
+(no arguments necessary, phpunit.xml contains the config)
