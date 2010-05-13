@@ -1,5 +1,7 @@
 <?php
 
+require 'HTML/Template/Flexy.php';
+
 class SGL2_View_Renderer_Html_Flexy extends SGL2_View_Renderer_Abstract
 {
     const FORCE_COMPILE = 0;
