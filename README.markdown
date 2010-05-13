@@ -2,20 +2,24 @@
 SGL2 is a complete rewrite of the [Seagull PHP framework](http://seagullproject.org/) for PHP5.
 
 ## Installation
-The easiest way to get the code up and running is to checkout `sgl2` and `sgl2_demo_app` into one directory in your web root folder.  You can alternatively place the libs in different locations, you would just need to modify `sgl2_demo_app/www/index.php` accordingly for the includes.
+The easiest way to get the code up and running is to checkout `sgl2` and `sgl2_demo_app` into one directory in your web root folder, let's call the parent dir `seagull2`.  You can alternatively place the libs in different locations, you would just need to modify `seagull2/sgl2_demo_app/www/index.php` accordingly for the includes.
 
 PEAR's `Flexy` templating lib is required, which also includes the `System` lib, used for creating dirs, etc.
 
 	$ pear install HTML_Template_Flexy
+	
+And you must make the `var` dir writable by the webserver.
+
+	$ chmod 777 seagull2/sgl2_demo_app/var
 
 ## Run the code
 Run the sample project from a browser:
 
-	http://localhost/sgl2_demo_app/www/index.php
+	http://localhost/seagull2/sgl2_demo_app/www/index.php
 
 Or commandline
 
-	$ php sgl2_demo_app/www/index.php
+	$ php seagull2/sgl2_demo_app/www/index.php
 
 ## Requirements
 Currently the code is working fine in >= PHP 5.2.6.
