@@ -32,11 +32,19 @@ class SGL2_Bootstrap extends SGL2_Bootstrap_Abstract
 	public function initLogger()
 	{
 		$config = $this->registry->getConfig();
-		$path = PROJECT_PATH . $config->logging->path;
-		if (!is_readable($path)) {
-			throw new Exception(sprintf('Log file not readable at %s', $path));
+		$logfile = PROJECT_PATH .'/'.$config->logging->path;
+		$logDir = dirname($logfile);
+        if (!is_dir($logDir)) {
+            $ok = System::mkDir(array('-p', $logDir));
+            @chmod($logDir, 0777);
+        }	
+        if (!is_file($logfile)) {
+            $ok = touch($logfile);
+        }	
+		if (!is_readable($logfile)) {
+			throw new Exception(sprintf('Log file not readable at %s', $logfile));
 		}
-		$writer = new Zend_Log_Writer_Stream($path);
+		$writer = new Zend_Log_Writer_Stream($logfile);
 		$logger = new Zend_Log($writer);		
 		$this->registry->set('logger', 	$logger);
 		$this->registry->getEventDispatcher()->addGlobalListener(new SGL2_Plugin_LogMessage());
