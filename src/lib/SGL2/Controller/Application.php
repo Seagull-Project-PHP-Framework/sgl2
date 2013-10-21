@@ -66,7 +66,7 @@ class SGL2_Controller_Application
 	
 	public function resolveController(SGL2_Request $request)
 	{
-        $moduleName = $request->getModuleName();
+        $moduleName = ucfirst($request->getModuleName());
         $controllerName = $request->getControllerName();
         $controller = $this->loadController($moduleName, $controllerName);		
 		return $controller;
@@ -90,18 +90,18 @@ class SGL2_Controller_Application
 	//	commands should not know about views	
 	public function resolveCommand(SGL2_Request $request)
 	{
-        $moduleName = $request->getModuleName();
-        $controllerName = $request->getControllerName();
-        $cmdName = $request->getCmdName();
-        $oCmd = $this->loadCommand($moduleName, $controllerName, $cmdName);
-        return $oCmd;		
+        $moduleName = ucfirst($request->getModuleName());
+        $controllerName = ucfirst($request->getControllerName());
+        $cmdName = ucfirst($request->getCmdName());
+        $cmd = $this->loadCommand($moduleName, $controllerName, $cmdName);
+        return $cmd;
 	}
 	
     public function loadCommand($moduleName, $controllerName, $cmdName)
     {
-        $file = '/modules/'.ucfirst($moduleName)."/Command/".ucfirst($cmdName).'.php';
+        $file = '/modules/' . $moduleName . "/Command/".$cmdName .'.php';
         require PROJECT_PATH . $file;
-        $class = ucfirst($moduleName) .'_Command_'.ucfirst($cmdName);
+        $class = $moduleName.'_Command_'.$cmdName;
         $obj = new $class($this->registry);
         return $obj;
     }

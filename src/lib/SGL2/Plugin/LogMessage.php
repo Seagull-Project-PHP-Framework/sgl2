@@ -1,8 +1,8 @@
 <?php
 
-class SGL2_Plugin_LogMessage extends Uber_Plugin_Abstract
+class SGL2_Plugin_LogMessage extends SGL2_Plugin_Abstract
 {
-    public function handleEvent(Uber_Event $e, $data = null)
+    public function handleEvent(SGL2_Event $e, $data = null)
     {
 		$registry = SGL2_Registry::getInstance();	
 		$logger = $registry->getLogger();

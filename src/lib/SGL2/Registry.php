@@ -30,7 +30,7 @@ class SGL2_Registry extends SGL2_Context
     public function init(Zend_Config $config)
     {
         $this->config = $config;
-        $this->dispatcher = Uber_Event_Dispatcher::getInstance();
+        $this->dispatcher = SGL2_Event_Dispatcher::getInstance();
     }
 
     public static function getInstance($name = null, $class = __CLASS__)
