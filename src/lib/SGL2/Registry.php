@@ -154,8 +154,9 @@ class SGL2_Registry extends SGL2_Context
     /**
      * Gets an object from the current context.
      *
-     * @param  string $name  The name of the object to retrieve
-     * @return object The object associated with the given name
+     * @param $name
+     * @return mixed
+     * @throws Exception
      */
     public function get($name)
     {

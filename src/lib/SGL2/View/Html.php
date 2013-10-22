@@ -10,8 +10,8 @@ class SGL2_View_Html extends SGL2_View_Abstract
     /**
      * HTML renderer decorator
      *
-     * @param SGL2_Response $data
-     * @param string $templateEngine
+     * @param SGL2_Response $response
+     * @param null $templateEngine
      */
     public function __construct($response, $templateEngine = null)
     {

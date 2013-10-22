@@ -37,7 +37,8 @@ class VariousTest extends PHPUnit_Framework_TestCase
 
     public function testAppContext()
     {
-		$config = new Zend_Config_Ini('config.ini', 'staging');
+        $configFile = TEST_PATH . '/config.ini';
+		$config = new Zend_Config_INI($configFile, 'staging');
         $registry = SGL2_Registry::createInstance($config);
 
 		$registry2 = SGL2_Registry::getInstance();

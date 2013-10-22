@@ -2,10 +2,10 @@
 
 class SGL2_View_Renderer_Default extends SGL2_View_Renderer_Abstract
 {
+
     /**
-     * Abstract render method.
-     *
-     * @param SGL2_View $view
+     * @param SGL2_View_Abstract $view
+     * @return string
      */
     public function render(SGL2_View_Abstract $view)
 	{

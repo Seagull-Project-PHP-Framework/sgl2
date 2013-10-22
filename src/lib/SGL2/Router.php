@@ -3,7 +3,7 @@
 /**
  * The router base class to resolve and generate urls.
  *
- * The minmal route consists of a unique name, a route
+ * The minimal route consists of a unique name, a route
  * and a default parameter for module, controller and action:
  * 
  * array(

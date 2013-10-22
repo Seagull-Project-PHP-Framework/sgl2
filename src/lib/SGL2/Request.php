@@ -26,10 +26,8 @@ class SGL2_Request
     /**
      * Set a key for Request object.
      *
-     * @access  public
-     * @param   mixed   $name   Request param name
-     * @param   mixed   $value  Request param value
-     * @return  void
+     * @param $key
+     * @param $value
      */
     public function set($key, $value)
     {

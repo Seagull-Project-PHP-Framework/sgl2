@@ -1,7 +1,5 @@
 <?php
 
-require 'HTML/Template/Flexy.php';
-
 class SGL2_View_Renderer_Html_Flexy extends SGL2_View_Renderer_Abstract
 {
     const FORCE_COMPILE = 0;
@@ -15,10 +13,10 @@ class SGL2_View_Renderer_Html_Flexy extends SGL2_View_Renderer_Abstract
     const IGNORE =  0; //  don't parse forms when set to true
 
     /**
-     * Director for html Flexy renderer.
+     *  Director for html Flexy renderer.
      *
-     * @param SGL2_View $view
-     * @return string   rendered html output
+     * @param SGL2_View_Abstract $view
+     * @return mixed
      */
     public function render(SGL2_View_Abstract $view)
     {
@@ -84,11 +82,11 @@ class SGL2_View_Renderer_Html_Flexy extends SGL2_View_Renderer_Abstract
     }
 
     /**
-     * Setup Flexy plugins if specified.
+     *  Setup Flexy plugins if specified.
      *
-     * @param SGL2_Output $data
+     * @param SGL2_Response $data
      * @param array $options
-     * @return boolean
+     * @return bool
      */
     protected function _setupPlugins(SGL2_Response $data, array $options)
     {

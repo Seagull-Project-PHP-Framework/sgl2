@@ -14,7 +14,7 @@ class SGL2_Controller_Application
 	
 	public function handleRequest(SGL2_Request $request, SGL2_Response $response)
 	{
-		$this->registry->getEventDispatcher()->triggerEvent(new SGL2_Event($this, 'core.beforeDispatch'));					
+		$this->dispatcher->triggerEvent(new SGL2_Event($this, 'core.beforeDispatch'));
 		try {
 			$controller = $this->resolveController($request);
 			$cmd = $controller->resolveCommand($request); // while
@@ -26,19 +26,23 @@ class SGL2_Controller_Application
 		} catch (Exception $e) {
 			throw $e;
 		}
-		$this->registry->getEventDispatcher()->triggerEvent(new SGL2_Event($this, 'core.afterDispatch'));							
+		$this->dispatcher->triggerEvent(new SGL2_Event($this, 'core.afterDispatch'));
 	}
 	
-	public function handleResponse(SGL2_Request $request, SGL2_Response $response)
+	public function handleResponse(SGL2_Response $response)
 	{
-		$view = $this->getView($request, $response);
+		$view = $this->getView($response);
 //		$template = $view->getTemplate($requestCtx, $responseCtx);
 		$ret = $this->invokeView($view);
 		return $ret;
 //		$this->dispatch($appCtx, $requestCtx, $responseCtx);
-	}	
-	
-	public function getView(SGL2_Request $request, SGL2_Response $response)
+	}
+
+    /**
+     * @param SGL2_Response $response
+     * @return SGL2_View_Html
+     */
+    public function getView(SGL2_Response $response)
 	{
 		$config = $this->registry->getConfig();
 		$response->layout = $config->modules->default->layout;
@@ -75,12 +79,10 @@ class SGL2_Controller_Application
 	public function loadController($moduleName, $controllerName)
 	{
 		if (is_null($controllerName)) {
-			//	we only loading Commands, use this Controller
+			//	we're only loading Commands, use this Controller
 			$ret = $this;
 			
 		} else {
-	        $file = "/modules/".ucfirst($moduleName)."/" .ucfirst($controllerName).'.php';
-	        require PROJECT_PATH . $file;
 	        $class = ucfirst($moduleName) .'_Controller_'. ucfirst($controllerName);
 	        $ret = new $class($this->registry);
 		}
@@ -99,8 +101,6 @@ class SGL2_Controller_Application
 	
     public function loadCommand($moduleName, $controllerName, $cmdName)
     {
-        $file = '/modules/' . $moduleName . "/Command/".$cmdName .'.php';
-        require PROJECT_PATH . $file;
         $class = $moduleName.'_Command_'.$cmdName;
         $obj = new $class($this->registry);
         return $obj;

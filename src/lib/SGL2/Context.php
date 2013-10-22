@@ -4,7 +4,7 @@ class SGL2_Context extends ArrayObject
 {
     /**
      * Constructs a parent ArrayObject with default
-     * ARRAY_AS_PROPS to allow acces as an object
+     * ARRAY_AS_PROPS to allow access as an object
      *
      * @param array $array data array
      * @param integer $flags ArrayObject flags
@@ -15,12 +15,13 @@ class SGL2_Context extends ArrayObject
     }
 
     /**
-     * @param string $index
-     * @returns mixed
+     * @param mixed $index
+     * @return bool
+     * @throws Exception
      *
      * Workaround for http://bugs.php.net/bug.php?id=40442 (ZF-960).
      */
-	public function offsetExists($index)
+    public function offsetExists($index)
 	{
 		if (!array_key_exists($index, $this)) {
 			throw new Exception("No entry is registered for key '$index'");
@@ -62,7 +63,7 @@ class SGL2_Context extends ArrayObject
     public function get($index)
     {
         if (!$this->offsetExists($index)) {
-            throw new Exception(sprintf('The "%s" object does not exist in the current context.', $name));
+            throw new Exception(sprintf('The "%s" object does not exist in the current context.', $index));
         }
         return $this->$index;
     }

@@ -9,7 +9,13 @@ class SGL2_Router_Adapter_Horde extends SGL2_Router_Adapter
 {
 	private $_mapper = null;
 	private $_defRoute = null;
-    
+
+    /**
+     * @param $url
+     * @param bool $noRedirect
+     * @return bool
+     * @throws SGL2_Router_Exception
+     */
     public function route($url, $noRedirect = false)
     {
 // use http://www.php.net/manual/en/function.parse-url.php	
@@ -39,7 +45,7 @@ class SGL2_Router_Adapter_Horde extends SGL2_Router_Adapter
     		$this->_setupRoutes($locale);
     	}
     	
-        // This hack is neccessary to prevent Horde_Routes
+        // This hack is necessary to prevent Horde_Routes
         // from killing our slashes in *params
         $url = str_replace("%2F", "%!$", $url);
 

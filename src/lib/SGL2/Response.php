@@ -3,7 +3,7 @@
 class SGL2_Response
 {
     /**
-     * Response data
+     * Response data.
      *
      * @var array
      */
@@ -17,21 +17,21 @@ class SGL2_Response
     protected $_code;
 
     /**
-     * Stores output string to be returned to user
+     * Stores output string to be returned to user.
      *
      * @var string
      */
     protected $_data;
 
     /**
-     * List of messages to be returned to user
+     * List of messages to be returned to user.
      *
      * @var array
      */
     protected $_aMessages;
 
     /**
-     * HTTP headers
+     * HTTP headers.
      *
      * @var array
      */
@@ -56,10 +56,10 @@ class SGL2_Response
 
 
     /**
-     * If object attribute does not exist, magically set it to data array
+     * If object attribute does not exist, magically set it to data array.
      *
-     * @param unknown_type $k
-     * @param unknown_type $v
+     * @param $k
+     * @param $v
      */
     public function __set($k, $v)
     {
@@ -108,7 +108,7 @@ class SGL2_Response
     }
 
     /**
-     * Used for outputting template in layout
+     * Used for outputting template in layout.
      *
      * @param string $templateEngine
      */
@@ -120,7 +120,7 @@ class SGL2_Response
         $this->layout = $this->template;
 
 #FIXME
-        //  considerable hack to workaround recursive Flexy call
+        //  nontrivial hack to workaround recursive Flexy call
         $aData = $this->getBody();
         unset($aData['x'], $aData['_t'], $aData['this']);
         $resp = (object) $aData;
