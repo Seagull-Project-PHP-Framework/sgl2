@@ -14,7 +14,7 @@
 
 <testsuites>
   <testsuite name="SGL2 Core Test Suite">
-    <directory>/Users/demian/Sites/seagull/_github/sgl2/tests</directory>
+    <directory>./</directory>
   </testsuite>
 </testsuites>
 </phpunit>
